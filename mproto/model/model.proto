@@ -1,0 +1,660 @@
+syntax = "proto3";
+
+package model;
+
+option go_package = "muskex/gen/mproto/model;model";
+
+
+message Config {
+  uint64 id = 1;
+  string name = 2;
+  string group = 3;
+  string title = 4;
+  string tip = 5;
+  string type = 6;
+  string value = 7;
+  string content = 8;
+  string rule = 9;
+  string extend = 10;
+  uint64 allow_del = 11;
+  int64 weigh = 12;
+  // 签名校验
+  string sign = 13;
+}
+
+
+message Coin {
+  int64 id = 1;
+  string name = 2;
+  string alias = 3;
+  string logo_image = 4;
+  string kline_type = 5;
+  double margin = 6;
+  double initial_price = 7;
+  int64 cur_price = 8;
+  double transfer_rate = 9;
+  double transfer_min_num = 10;
+  uint64 allow_transfer = 11;
+  uint64 allow_recharge = 12;
+  uint64 home_recommend = 13;
+  int64 weigh = 14;
+  uint64 create_time = 15;
+  uint64 update_time = 16;
+  uint64 status = 17;
+
+  uint64  event_time=18;
+  float  price_change_percent=19;
+  double  total_trade=20;
+}
+
+message MarketNews {
+  uint64 id = 1;
+  string title = 2;
+  string cover_image = 3;
+  string content = 4;
+  uint64 status = 5;
+  uint64 release_time = 6;
+  uint64 create_time = 7;
+  uint64 update_time = 8;
+}
+
+message MarketNotice {
+  uint64 id = 1;
+  string title = 2;
+  string content = 3;
+  string url = 4;
+  uint64 is_top = 5;
+  uint64 is_dialog = 6;
+  uint64 release_time = 7;
+  uint64 create_time = 8;
+  uint64 update_time = 9;
+}
+
+
+message User {
+  int64 id = 1;
+  int64 group_id = 2;
+  string wallet_addr = 3; // 钱包地址
+  string pingtai = 4; // 平台
+  string username = 5;
+  string nickname = 6;
+  string email = 7;
+  string mobile = 8;
+  string avatar = 9;
+  int64 gender = 10;
+  string birthday = 11;
+  double money = 12;
+  int64 score = 13;
+  int64 last_login_time = 14;
+  string last_login_ip = 15;
+  int64 login_failure = 16;
+  string join_ip = 17;
+  int64 join_time = 18;
+  string motto = 19;
+  string password = 20;
+  string salt = 21;
+  string fund_password = 22;
+  string fund_salt = 23;
+  string status = 24;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 25;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 26;
+  int64 refereeid = 27;
+  string invitationcode = 28;
+  string name = 29;
+  string idcard = 30;
+  string certify_id = 31; // 实人认证唯一标识
+  int64 is_certified = 32; // 是否实名：1 未实名 2 已实名 3 认证失败
+  int64 is_can_withdraw = 33;
+  int64 is_team_leader = 34;
+  int64 is_whitelist = 35;
+  int64 is_activation = 36;
+  int64 activation_time = 37;
+  int64 active_times = 50;
+  int64 limit_withdraw_time = 38;
+  string team_flag = 39;
+  int64 team_leader_id = 40;
+  int64 team_level = 41;
+  double commission_pool = 42;
+  int64 level = 43;
+  int64 referee_nums = 44;
+  int64 team_nums = 45;
+  int64 lottery_count = 46;
+  int64 credit_score = 47; // 信誉分
+  repeated FinancialAddress withdraw_addresses = 48;
+  repeated FinancialWithdraw Withdraws = 49;
+}
+
+message Token {
+  string token = 1;
+  string type = 2;
+  int64 user_id = 3;
+  int64 create_time = 4;
+  int64 expire_time = 5;
+}
+
+
+message UserLevel {
+  int64 id = 1;
+  string logo_image = 2;
+  string name = 3;
+  uint32 level = 4;
+  int64 rebate_layers = 5;
+  uint32 referee_num = 6;
+  uint32 team_num = 7;
+  uint32 member_level = 8;
+  uint32 member_level_num = 9;
+  float bonus = 10;
+  float layer_1_ratio = 11;
+  float layer_2_ratio = 12;
+  float layer_3_ratio = 13;
+  float layer_4_ratio = 14;
+  float layer_5_ratio = 15;
+  int64 is_open = 16;
+}
+
+message TeamUser {
+  //user_id
+  // @gotags:  `gorm:"primarykey"`
+  int64 id = 1;
+  // @gotags:  `gorm:"primarykey"`
+  int64 pid = 2;
+  int64 team_level = 3;
+  bool is_active = 4;
+  int64 is_whitelist = 5;
+  int64 user_level = 6;
+  // @gotags: gorm:"autoUpdateTime"
+    int64 UpdateTime = 7;
+}
+
+message UserTeamLevel {
+  int64 id = 1;
+  int64 user_id = 2;
+//  @gotags: gorm:"column:user_level"
+  int64 user_level_id = 4;
+  uint32 team_nums = 5;
+  uint32 referee_nums = 6;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 7;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 8;
+}
+
+message FinancialCard {
+  int64 id = 1;
+  int64 user_id = 2;
+  uint32 financial_bank_id = 3;
+  string account_name = 4;
+  string bank_num = 5;
+  string status = 6;
+  //@gotags: gorm:"-"
+  string status_text=9;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 7;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 8;
+}
+
+message MarketCarousel {
+  int64 id = 1;
+  string position = 2;
+  string image = 3;
+  string editor = 4;
+  string url = 5;
+  int64 weigh = 6;
+  int64 create_time = 7;
+  int64 update_time = 8;
+  int64 status = 9;
+  int64 can_open =10;
+}
+
+message FinancialBank {
+  int64 id = 1;
+  string name = 2;
+  string short_name = 3;
+  string logo = 4;
+  int64 fee_ratio = 5;
+  int64 status = 6;
+  int64 create_time = 7;
+  int64 update_time = 8;
+}
+
+message FinancialAddress {
+  uint32 id = 1;
+  uint32 user_id = 2;
+  // Network type: 0 or 1
+  string network = 3;
+  string address = 4;
+  string name = 5;
+  // Default address: 0 or 1
+  string is_default = 6;
+  uint32 status = 7;
+  // @gotags: gorm:"autoCreateTime"
+  uint64 create_time = 8;
+  // @gotags: gorm:"autoUpdateTime"
+  uint64 update_time = 9;
+}
+
+// usdt理财
+message CoinManagement {
+  int64 id = 1;
+  // 产品名称
+  string name = 2;
+  // 结算币种
+  int64 settlement_coin_id = 3;
+  // 收益币种
+  int64 income_coin_id = 4;
+  // 开始时间
+  int64 begin_time = 5;
+  // 结束时间
+  int64 end_time = 6;
+  // 购买价格
+  double price = 7;
+  // 封闭天数
+  int64 closed_days = 8;
+  // 发行总量
+  int64 issues_num = 9;
+  // 已申购量
+  int64 sold_num = 10;
+  // 最低购买
+  int64 min_buy_num = 11;
+  // 最高购买
+  int64 max_buy_num = 12;
+  // 收益类型
+  string income_type = 13;
+  // 收益率
+  double income_ratio = 14;
+  // 状态
+  int64 status = 15;
+  // 权重
+  int64 weigh = 16;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 17;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 18;
+}
+message ManagementOrder {
+  int64 id = 1;
+  string order_no = 2;
+  int64 user_id = 3;
+  int64 refereeid = 4;
+  int64 team_leader_id = 5;
+  int64 coin_management_id = 6;
+  CoinManagement coin_management = 22;
+  int64 settlement_coin_id = 7;
+  Coin settlement_coin = 23;
+  int64 income_coin_id = 8;
+  Coin income_coin = 24;
+  double price = 9;
+  int64 buy_num = 10;
+  double total_price = 11;
+  string income_type = 12;
+  double income_ratio = 13;
+  double total_income = 14;
+  double paid_income = 15;
+  // 返利金额
+  double rebate_income = 16;
+  int64 closed_days = 17;
+  // 1进行中2已完成3已终止
+  string status = 18;
+  // @gotags: gorm:"-"
+  string status_text = 25;
+  int64 expire_time = 19;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 20;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 21;
+}
+
+message Miners {
+  int64 id = 1;
+  string image = 2;
+  string name = 3;
+  string model = 4;
+  int64 settlement_coin_id = 5;
+  double price = 6;
+  int64 produce_coin_id = 7;
+  int64 gen_income = 8;
+  int64 mining_power = 9;
+  int64 run_days = 10;
+  int64 issues_num = 11;
+  int64 sales_num = 12;
+  int64 buy_limit = 13;
+  int64 weigh = 14;
+  int64 create_time = 15;
+  int64 update_time = 16;
+  int64 status = 17;
+}
+
+message KlineData {
+  int64 id = 1;
+  string stat_type = 2;
+  string symbol = 3;
+  int64 start_time = 4;
+  double open = 5;
+  double close = 6;
+  double high = 7;
+  double low = 8;
+  //成交量
+  double volume = 9;
+  //成交额
+  double quote_volume = 10;
+}
+message TickerData {
+  double open = 5;
+  //现价
+  double price = 6;
+  //最高价
+  double high = 7;
+  //最低价
+  double low = 8;
+  //成交量
+  double volume = 9;
+  //24h 成交额
+  double quote_volume = 10;
+  //涨跌幅
+  double price_change_percent = 11;
+}
+
+
+message MinersExchange {
+  int64 id = 1;
+  string code = 2;
+  int64 miners_id = 3;
+  int64 user_id = 4;
+  string order_no = 5;
+  int64 total_num = 6;
+  int64 used_num = 7;
+  double discount_ratio = 8;
+  int64 status = 9;
+  int64 create_time = 10;
+  int64 update_time = 11;
+}
+message MinersOrder {
+  int64 id = 1;
+  int64 miners_id = 2;
+  int64 user_id = 3;
+  int64 refereeid = 4;
+  int64 team_leader_id = 5;
+  int64 settlement_coin_id = 6;
+  int64 produce_coin_id = 7;
+  string order_no = 8;
+  double price = 9;
+  int64 num = 10;
+  double total_price = 11;
+  string exchange_code = 12;
+  double discount_ratio = 13;
+  double discount_amount = 14;
+  double real_pay = 15;
+  double estimated_income = 16;
+  double gained_income = 17;
+  double pending_income = 18;
+  double bonus = 19;
+  int64 run_minutes = 20;
+  int64 run_days = 21;
+  string status = 22; // enum ('1', '2', '3')
+  int64 expire_time = 23;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 24;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 25;
+  Miners  miners = 26;
+}
+message UserAssets {
+  int64 id = 1;
+  int64 user_id = 2;
+  int64 coin_id = 3;
+  //@gotags: gorm:"-"
+  string coin_name = 9;
+  double balance = 4;
+  double freeze = 5;
+  string address = 6;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 7;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 8;
+}
+
+message UserCoinChange {
+  int64 id = 1;
+  int64 user_id = 2;
+  int64 coin_id = 3;
+  double amount = 4;
+  double before = 5;
+  double after = 6;
+  string type = 7;
+  int64 from_user_id = 8;
+  int64 to_user_id = 9;
+  //引起余额变动的订单号
+  int64 referrer_id = 12;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 10;
+  string remark = 11;
+}
+
+message CoinRecharge {
+  int64 id = 1;
+  int64 user_id = 2;
+  string trade_id = 3;
+  double amount = 4;
+  string address = 13;
+  string main_coin_type = 14;
+  string tx_id = 15;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 10;
+}
+
+message ManChange {
+  int64 id = 1;
+  int64 user_id = 2;
+  double amount = 4;
+  double before = 5;
+  double after = 6;
+  string type = 7;
+  // @gotags: gorm:"-"
+  string type_name = 14;
+  int64 from_user_id = 8;
+  //引起余额变动的订单号
+  int64 referrer_id = 12;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 10;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 13;
+  string remark = 11;
+}
+message Lecturer {
+  int64 id = 1; // Primary key
+  string avatar_image = 2; // Avatar image
+  string community_name = 3; // Community name
+  int64 community_user_num = 4; // Community user number
+  string lecturer_name = 5; // Lecturer name
+  string margin = 6; // Margin
+  string winning_percentage = 7; // Winning percentage
+  int64 weigh = 8; // Weigh
+  int64 status = 9; // Status
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 10;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 13;
+}
+
+message UserCommissionChange {
+  int64 id = 1;
+  int64 user_id = 2;
+  double amount = 3;
+  double before = 4;
+  double after = 5;
+  string type = 6;
+  string type_name = 14;
+  int64 from_user_id = 7;
+  //引起余额变动的订单号
+  int64 referrer_id = 12;
+  string remark = 8;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 10;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 13;
+}
+message FinancialWithdraw {
+  int64 id = 1; // Primary key
+  int64 user_id = 2; // default '0' not null
+  int64 refereeid = 3; // null
+  int64 team_leader_id = 4; // null
+  string type = 5; // enum ('0', '1') not null
+  int64 coin_id = 6; // default '0' null
+  int64 financial_card_id = 7; // default '0' null
+  string order_no = 8; // default '' not null
+  float money = 9; // decimal(10, 2) default 0.00 null
+  float coin_num = 10; // decimal(10, 2) default 0.00 null
+  float price = 11; // decimal(10, 2) default 0.00 null
+  string wallet_type = 12; // default '' null
+  string wallet_address = 13; // default '' null
+  int64 address_id = 14; // null
+  float fee_ratio = 15; // decimal(10, 2) default 0.00 null
+  float fee_money = 16; // decimal(10, 2) default 0.00 null
+  float fee_coin = 17; // decimal(10, 2) default 0.00 null
+  float actual_money = 18; // decimal(10, 2) default 0.00 null
+  float actual_coin = 19; // decimal(10, 2) default 0.00 null
+  string status = 20; // enum ('0', '1', '2', '3', '4') default '0' not null
+  //@gotags: gorm:"-"
+  string status_text=24;
+  string remark = 21; // null
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 22;
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 23;
+  FinancialCard FinancialCard = 25;
+}
+message FinancialRecharge {
+  int64 id = 1; // Primary key
+  int64 user_id = 2; // default '0' not null
+  string order_no = 3; // default '' not null
+  string name = 4; // null
+  int64 financial_payment_method_id = 5; // default '0' not null
+  float amount = 6; // decimal(16, 2) default 0.00 not null
+  float fee_ratio = 7; // decimal(16, 2) default 0.00 not null
+  float fee = 8; // decimal(16, 2) default 0.00 not null
+  float actual_money = 9; // decimal(16, 2) default 0.00 not null
+  float main_coin_num = 10; // decimal(16, 2) default 0.00 not null
+  float main_coin_fee = 11; // decimal(16, 2) default 0.00 null
+  float coin_price = 12; // decimal(16, 2) default 0.00 not null
+  string callback_data = 13; // default '' null
+  string status = 14; // enum ('0', '1', '2', '3') default '0' not null // 0等待支付1已完成2已取消3虚拟到账
+  //@gotags: gorm:"-"
+  string status_text=24;
+  // @gotags: gorm:"autoCreateTime"
+  int64 create_time = 15; // null
+  // @gotags: gorm:"autoUpdateTime"
+  int64 update_time = 16; // null
+}
+message FinancialPaymentMethod {
+  // Primary key
+  int64 id = 1;
+  // Name of the payment method
+  string name = 2;
+  // Short name of the payment method
+  string short_name = 3;
+  // Type of the payment method
+  string type = 4;
+  // Bank account associated with the payment method
+  string bank_account = 5;
+  // QR code image URL
+  string qrcode_image = 6;
+  // Merchant number
+  string merchant_num = 7;
+  // Encryption key
+  string encryption_key = 8;
+  // Other encryption key
+  string other_encryption_key = 9;
+  // Payment channels
+  string payment_channels = 10;
+  // URL associated with the payment method
+  string url = 11;
+  // Minimum amount
+  float min_amount = 12;
+  // Maximum amount
+  float max_amount = 13;
+  // Fee ratio
+  float fee_ratio = 14;
+  // Status of the payment method
+  int64 status = 15;
+  // Weigh
+  int64 weigh = 16;
+  // Creation time
+  int64 create_time = 17;
+  // Update time
+  int64 update_time = 18;
+}
+
+message CoinContract {
+  int64 id = 1; // Primary key
+  int64 coin_id = 2;
+  int64 buying_cycle = 3;
+  string buying_cycle_unit = 4;
+  float profit_ratio_up = 5;
+  float profit_ratio_down = 6;
+  float purchase_up = 7;
+  float purchase_down = 8;
+  float loss_ratio_up = 9;
+  float loss_ratio_down = 10;
+  float fee_ratio = 11;
+  int64 is_profit = 12;
+  int64 status = 13;
+  int64 create_time = 14;
+  int64 update_time = 15;
+}
+
+message TradeContractOrder {
+  int64 id = 1; // Primary key
+  int64 user_id = 2;
+  int64 refereeid = 3;
+  int64 team_leader_id = 4;
+  int64 contract_id = 5;
+  int64 coin_id = 6;
+  string order_no = 7;
+  string title = 8;
+  float num = 9;
+  float buy_price = 10;
+  double invested_coin_num = 11;
+  double fee = 12;
+  float fee_ratio = 13;
+  float sell_price = 14;
+  float income = 15;
+  float income_ratio = 16;
+  int64 status = 17;
+  // @gotags: gorm:"-"
+  string status_text = 21;
+  int64 payment_status = 18;
+  int64 buy_time = 19;
+  int64 sell_time = 20;
+}
+
+message SmsTemplate {
+  int64   id = 1; // Primary key
+  string  title = 2;
+  string  code = 3;
+  string  template = 4;
+  string  content = 5;
+  string  variables = 6;
+  int64   status = 7;
+  int64   updatetime = 8;
+  int64   createtime = 9;
+
+}
+
+message SmsVariable{
+  int64   id = 1; // Primary key
+  string  title = 2;
+  string  name = 3;
+  string  value_source = 4;// enum ('literal','func','sql') default 'literal' not null
+  string  value = 5;
+  string  sql = 6;
+  string  namespace = 7;
+  string  class = 8;
+  string  func = 9;
+  string  param = 10;
+  int64   status = 11;
+  int64   updatetime = 12;
+  int64   createtime = 13;
+}

@@ -1,0 +1,197 @@
+syntax = "proto3";
+import "google/api/annotations.proto";
+import "mproto/model/model.proto";
+package mproto;
+option go_package = "muskex/gen/mproto;mproto";
+
+service PubService{
+  //首页，对应旧项目的 /api/index/home
+  rpc Index(NullMsg) returns (IndexResonse) {}
+  //		源api /api/index/helpCenter
+  rpc HelpList(NullMsg)returns(HelpListResponse);
+  // 源api /api/index/helpDetail?name=xxx
+  rpc HelpDetail(StringParam)returns(model.Config);
+  // 首页轮播 对应旧项目的 /api/index/carouselList
+  rpc CarouselList(NullMsg) returns (CarouselListResonse) {}
+  //用户表直接添加cardCount
+  // 用户是否可充值 对应旧项目的  /api/index/userHome
+  //  rpc UserRechargeStatus(NullMsg) returns (NullMsg) {}
+
+  //首页3个币排行及推荐，币数据中的logImage路径，使用这样的模板 https://image.tecajx.vipimages/{xxx}.png ; 如BTC使用https://image.tecajx.vip/images/BTC.png
+  rpc IndexAllCoin(PidParam) returns (IndexAllCoinResponse) {}
+  // 银行卡列表 对应旧项目的 /api/financial_card/bankList
+  rpc BankList(NullMsg) returns (BankListResonse) {}
+  // usdt理财 对应旧项目的 /coin_management/index
+  rpc CoinManagementList(NullMsg) returns (CoinManagementListResonses) {}
+  // 矿机列表
+  rpc MinerList(NullMsg) returns (MinerListResonses) {}
+  //按卡号获取卡信息。 对应旧项目的  /api/financial_card/getBank?card=xxxxxx
+  rpc GetBankByPre(GetBankByPreRequest) returns (model.FinancialBank) {}
+  //kline初始列表:服务端缓存5秒 对应旧项目的  /api/coin_data/kline
+  rpc KlineInfoList(KlineInfoRequest) returns (KlineDataResponse) {}
+  //kline离当前时间最近的1条信息:服务端缓存1秒; 同时附带了depth,ticker数据。 对应旧项目的  /api/coin_data/kline
+  rpc KlineInfoLast(KlineInfoRequest) returns (KlineInfoLastResonse) {}
+  //kline trade信息:服务端缓存1秒。 对应旧项目的  /api/coin_data/trade
+  rpc KlineTradeList(StringParam) returns (KlineTradeListResonse) {}
+  // ContractInfo 服务端缓存1秒。 对应旧项目的  /api/contract_order/contractInfo
+  //  rpc ContractInfo(KlineInfoRequest) returns (KlineDataResponse) {}
+
+  //行情列表  对应旧项目的  api/coin_data/ticker
+  rpc RankList(RankListRequest) returns (RankListResponse) {}
+  rpc SendSms(SendSmsRequest) returns (MsgResponse) {}
+  rpc Greet(StringParam) returns (stream GreetResponse) {}
+
+/*过期的，已经合并到KlineInfoLast*/
+  //  //coin行情 对应旧项目的  /api/coin_data/tickerInfo
+  //  rpc TickerInfo(StringParam) returns (TickerInfoResponse) {}
+  //  //kline depth信息:服务端缓存1秒。 对应旧项目的  /api/coin_data/trade
+  //  rpc KlineDepth(StringParam) returns (JsonBsResonse) {}
+}
+message KlineTradeListResonse{
+  repeated TradeEvent list = 1;
+}
+message TradeEvent{
+//  int64 Time = 1;
+  string Price = 2;
+  string Quantity = 3;
+  int64 TradeTime = 4;
+  bool IsBuyerMaker = 5;
+}
+message KlineInfoLastResonse {
+//  k线
+  model.KlineData Kline = 1;
+//  深度
+  DepthData Depth = 2;
+  //24h交易信息
+  model.TickerData Ticker = 3;
+}
+message DepthData {
+  string symbol = 1;
+  int64 lastUpdateId = 2;
+  repeated PriceLevel bids = 3;
+  repeated PriceLevel asks = 4;
+}
+message PriceLevel {
+  string price = 1;
+  string quantity = 2;
+}
+message GreetResponse{
+  string message =1;
+}
+message IndexAllCoinResponse{
+  Ranks ranks  = 1;
+  repeated mproto.RankItem Coins = 5;
+}
+message Ranks{
+  string bull = 1;
+  string bear = 2;
+  string trade = 3;
+  string recommand = 4;
+}
+
+message JsonBsResonse{
+  bytes data = 1;
+}
+message RankListRequest{
+  int32 Pid=2;
+  RankType rankType = 1;
+  enum RankType{
+    //涨幅榜
+    RANK_TYPE_DESC = 0;
+    //跌幅榜
+    RANK_TYPE_ASC = 1;
+    //24小时交易量降序
+    RANK_TYPE_TRADE = 2;
+    //保证金升序
+    RANK_TYPE_MARGIN_ASC = 3;
+    //保证金降序
+    RANK_TYPE_MARGIN_DESC = 4;
+  }
+}
+message RankListResponse{
+  repeated RankItem list = 1;
+  string hot_names = 2;
+}
+message RankItem{
+  int64 id = 1;
+  string    name = 2;
+//  string  logo_image = 5;
+  string    kline_type = 3;
+  string    alias = 4;
+  float  price_change_percent = 6;
+  double initial_price = 7;
+  float margin = 8;
+//  uint32 event_time = 8;
+
+  //24小时交易量
+  double total_trade = 9;
+  uint64 event_time = 10;
+}
+message KlineDataResponse {
+  repeated model.KlineData list=1;
+}
+message KlineInfoRequest {
+    string interval=1;
+    string kline_type=2;
+}
+message TickerInfoResponse {
+  bytes data = 1;
+}
+message GetBankByPreRequest {
+  string Card=1;
+}
+message IndexResonse{
+  repeated model.Coin coinList = 1;
+  string inviteRegisterRule = 2;
+  repeated model.MarketNotice noticeList = 3;
+  repeated model.MarketNews newsList = 4;
+  string appVersion = 5;
+  string androidDownloadUrl = 6;
+  string iosDownloadUrl = 7;
+  string wgtDownloadUrl = 8;
+  string appVersionDesc = 9;
+  string openFaceRecognition = 10;
+  string customerServiceLink = 11;
+}
+
+message MinerListResonses{
+  repeated model.Miners list =1;
+}
+
+message BankListResonse{
+  repeated model.FinancialBank list =1;
+}
+
+message CoinManagementListResonses{
+  repeated model.CoinManagement list = 1;
+}
+message HelpListResponse{
+  repeated model.Config list = 1;
+}
+message StringParam{
+  string str = 1;
+}
+message SendSmsRequest{
+  string mobile = 1;
+  string templateCode = 2;
+}
+message NullMsg {
+}
+message MsgResponse {
+  string message = 1;
+}
+message IdParam{
+  int32 id = 1;
+}
+message PidParam{
+  int32 Pid = 1;
+}
+message CarouselListResonse{
+  repeated model.MarketCarousel list =1;
+}
+message SmsVariable{
+  int64   id = 1;
+  string  type = 2;
+  string  name = 3;
+  string  value = 4;
+}

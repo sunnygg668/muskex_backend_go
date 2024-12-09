@@ -1,0 +1,315 @@
+syntax = "proto3";
+import "mproto/model/model.proto";
+import "mproto/pub.proto";
+import "google/api/httpbody.proto";
+package mproto;
+option go_package = "muskex/gen/mproto;mproto";
+
+service UserManService{
+  //修改密码
+  rpc UpdatePwd(UpdatePwdRequest) returns (UpdatePwdResponse) {}
+  // 实名人脸认证初始化： 对应源api realNameAuthentication：响应内容为aliyun的原始结果，需要在测试中确定失败和成功的返回内容。
+  rpc InitVerifyFace(InitVerifyFaceRequest) returns (google.api.HttpBody) {}
+  //  实名人脸认证结果： 对应源api realNameAuthentication后的results。 响应内容为aliyun的原始结果,需要在测试中确定失败和成功的返回内容。
+  rpc GetVerifyFaceRes(GetVerifyFaceResRequest) returns (google.api.HttpBody) {}
+  // 保存实名认证身份证信息
+  rpc SaveIdCardInfo(IdCardInfo) returns (MsgResponse) {}
+
+  //	/源api /api/user_assets/assetsInfo
+  rpc AssetBalanceList(NullMsg)returns(AssetBalanceListResponse);
+  //源api /api/index/levelInfo
+  rpc LevelInfo(NullMsg)returns(LevelInfoResponse);
+  //用户等及信息，对应旧项目的 /api/user/userInfo
+  rpc UserInfoLevel(NullMsg) returns (UserInfoLevelResponse) {}
+
+  //添加addcard 对应旧项目的 /api/financial_card/add
+  rpc AddCard(AddCardRequest) returns (NullMsg) {}
+  // 源api/api/address/add
+  rpc AddWithdrawAddress(AddWithdrawAddressRequest) returns (MsgResponse) {}
+  // 源api api/financial_recharge/methodList
+  rpc  QuickPayMethodList(NullMsg) returns (QuickPayMethodListResponse) {}
+  //  源api api/financial_recharge/rechargeList
+  rpc  RechargeList(NullMsg) returns (RechargeListResponse) {}
+  // 快捷充值提交 源api  api/financial_recharge/submitRecharge
+  rpc  SubmitRecharge(SubmitRechargeRequest) returns (SubmitRechargeResponse) {}
+
+  // 提现地址列表 源api/api/address/index  ba_financial_address
+  rpc ListWithdrawAddress(NullMsg) returns (ListWithdrawAddressResponse) {}
+  // 银行卡列表  源api /api/financial_card/list
+  rpc ListCard(NullMsg) returns (ListCardtResponse) {}
+  //提现相关配制信息接口：  汇率 tip...  源api /api/withdraw/info
+  rpc WithdrawInfo(NullMsg) returns (WithdrawInfoResponse) {}  //用户usdt余额 源api /api/user_assets/mainCoinAssets ba_user_assetsid
+  //参数 coin_id： usdt的id 为1 ，默认为1.
+  rpc AssetBalanceWithTip(IdParam) returns (AssetBalanceWithTipResponse) {}
+  //提现申请 源api /api/withdraw/apply
+  rpc WithdrawApply(WithdrawApplyRquest) returns (MsgResponse) {}
+  //提现列表: str参数提交 “0” 或 “1”： /api/withdraw/list
+  //对于 加密记录目前只有USDT,前端写死使USDT即可
+  rpc ListWithdraw(StringParam) returns (listWithdrawResponse) {}
+
+  //租赁矿机
+  rpc LeaseMiner(LeaseMinerRequest) returns (MsgResponse) {}
+  //矿机定单列表 源ip /api/miners_order/list
+  rpc MinerOrderList(MinerOrderListRequest) returns (MinerOrderListResponse) {}
+
+
+   //理财钱包余额信息api 源api: /api/user/walletInfo
+  rpc CMWalletInfo (NullMsg) returns (WalletBalance){}
+  //理财钱转出api  源api: /api/coin_management/transferOut
+  rpc CMTransferOut(TransferRequest) returns (MsgResponse){}
+  // 理财钱包转入api  源api: /api/coin_management/transferIn
+  rpc CMTransferIn (TransferRequest) returns (MsgResponse){}
+// 余额宝记录   源api: /api/coin_change/managementIncomeList
+  rpc ManChangeList (NullMsg) returns (ManChangeListResponse){}
+  //  佣金池首页 源api: api/commission_pool/index
+  rpc CommissionPoolIndex (NullMsg) returns (CommissionPoolIndexResponse){}
+  //  佣金池记录 源api: api/commission_pool/changeList
+  rpc CommissionChangeList (NullMsg) returns (CommissionChangeListResponse){}
+  //api/commission_pool/collect
+  rpc CommissionCollect (NullMsg) returns (MsgResponse){}
+
+  //导师社区列表 源api:api/lecturer/index
+  rpc LecturerList(NullMsg) returns (LecturerListResponse){}
+  //    理财定单列表
+  rpc ManagementOrderList (NullMsg) returns (ManagementOrderListResponse){}
+  // 购买理财 源api:/api/coin_management/buy
+  rpc BuyMan (BuyManRequest) returns (MsgResponse){}
+  // 购买合约  源api:api/contract_order/buy
+  rpc BuyContract (BuyContractRequest) returns (MsgResponse){}
+  // 合约定单列表  源api: api/contract_order/list ;仅一个参数id，做为status使用
+  rpc TradeContractOrderList (IdParam) returns (TradeContractOrderListResponse){}
+}
+message SubmitRechargeResponse {
+  //快捷支付返回跳转地址，
+  string redirect_url = 1;
+//  银行卡支付返回提示信息
+  string message = 2;
+}
+message SubmitRechargeRequest {
+  int32 methodId = 1;
+  string name = 2;
+  float amount = 3;
+}
+message RechargeListResponse {
+  repeated model.FinancialRecharge list = 1;
+}
+message QuickPayMethodListResponse {
+  float mainCoinPrice = 1;
+  string rechargeMoneyTip = 2;
+  repeated  model.FinancialPaymentMethod MethodList = 3;
+}
+message IdCardInfo {
+  string name = 1;
+  string idcard = 2;
+}
+message BuyContractRequest {
+//  币名 如 BTC
+  string ContractName = 1;
+  uint32 num = 2;
+}
+message BuyManRequest {
+  int64 id = 1;
+  int64 num = 2;
+  string fundPassword = 3;
+}
+message TradeContractOrderListResponse {
+  repeated model.TradeContractOrder list = 1;
+}
+message LecturerListResponse {
+  repeated model.Lecturer list = 1;
+}
+message CommissionChangeListResponse {
+  repeated model.UserCommissionChange list = 1;
+}
+message CommissionPoolIndexResponse {
+  model.User user = 1;
+  model.UserLevel level = 2;
+  string commissionPoolTip = 3;
+  double totalAmount = 4;
+  int64 teamNums = 5;
+  int64 teamNumsGrade = 6;
+  int64 collectNum = 7;
+  bool canCollect = 8;
+}
+
+message ManagementOrderListResponse {
+  repeated model.ManagementOrder list = 1;
+}
+message ManChangeListResponse {
+  repeated model.ManChange list = 1;
+}
+message TransferRequest {
+  double amount = 1;
+  string fundPassword = 2;
+}
+message WalletBalance {
+  double usdt = 1;
+  double money = 2;
+  string moneyHourIncomeRatio = 3;
+}
+message listWithdrawResponse {
+  repeated model.FinancialWithdraw list = 1;
+}
+message WithdrawApplyRquest {
+  string type = 1;
+  double amount = 2;
+  int32 addressId = 3;
+  int32 cardId = 4;
+  string fundPassword = 5;
+}
+message WithdrawInfoResponse {
+  double balance = 1;
+  double usdtPrice = 2;
+  bool openWithdrawUsdt = 3;
+  bool openWithdrawMoney = 4;
+  string withdrawMinNum = 5;
+  string withdrawMaxNum = 6;
+  string withdrawMinCoinNum = 7;
+  string withdrawMaxCoinNum = 8;
+  string withdrawRuleTip = 9;
+  string feeRatio = 10;
+}
+message   AddWithdrawAddressRequest {
+  string address = 1;
+  string name = 2;
+}
+message   ListCardtResponse {
+  repeated model.FinancialCard list = 1;
+}
+message   AssetBalanceWithTipResponse {
+  model.UserAssets Asset = 1;
+  string tip = 2;
+}
+message MinerOrderListRequest {
+//  1正常,2过期
+  int32 status = 1;
+//    Pager pager = 1;
+}
+message Pager {
+  //same as mysql's offsset; default(0)
+  int32 start =2;
+  //same as mysql's limit; default(20)
+  int32 limit =3;
+}
+message MinerOrderListResponse {
+  repeated model.MinersOrder list = 1;
+}
+
+message LeaseMinerRequest {
+  uint32 num = 1;
+  uint32 minersId = 2;
+  string fundPassword = 3;
+  string exchange_code = 4;
+}
+message UserInfoLevelResponse {
+  UserInfo userInfo = 1;
+  Level level = 2;
+  Level nextLevel = 3;
+  uint32 nextRefereeNums = 4;
+  uint32 refereeNumsDiff = 5;
+  uint32 nextTeamNums = 6;
+  uint32 teamNumsDiff = 7;
+  string teamLeaderMobile = 8;
+  string identifierHash = 9;
+}
+
+//message GetMemberInfoReqest{
+//  string wallet_addr = 1;
+//  string pingtai = 2;
+//  string invitationCode = 3;
+//}
+
+message AddCardRequest {
+  uint32 bankId = 1;
+  string accountName = 2;
+  string bankNum = 3;
+  string fundPassword = 4;
+}
+
+message UserInfo {
+  int64 id = 1;
+  string username = 2;
+  string nickname = 3;
+  string email = 4;
+  string mobile = 5;
+  string avatar = 6;
+  //  string fund_password = 7;
+  int64 referee_nums = 8;
+  int64 team_nums = 9;
+  string token = 10;
+  string refresh_token = 11;
+  //userName
+  string name = 12;
+  string idCard = 13;
+  int64 is_certified=14;
+}
+message Level {
+  uint32 id = 1;
+  string name = 2;
+  string logo_image = 3;
+  uint32 bonus = 4;
+  //for next level
+  uint32 referee_num = 5;
+  //for next level
+  uint32 team_num = 6;
+}
+
+message TeamData {
+  uint32 userId = 1;
+  uint32 teamNums = 2;
+  string mobile = 3;
+  string wallet_addr = 4;
+  string money = 5;
+  uint32 totalTeamNums = 6;
+  uint32 todayContractAmount = 7;
+  uint32 todayCommission = 8;
+  uint32 todayIncome = 9;
+  uint32 teamContractAmount = 10;
+  uint32 todayTeamContractAmount = 11;
+  uint32 minersTotalPrice = 12;
+  uint32 managementTotalPrice = 13;
+}
+message ListWithdrawAddressResponse {
+  repeated model.FinancialAddress list = 1;
+}
+message LevelInfoResponse {
+  repeated model.UserLevel  levelList = 7;
+  uint32 todayInviteCount = 1;
+  uint32 weekInviteCount = 2;
+  uint32 monthInviteCount = 3;
+  repeated InviterReachcfg todayInviteReachedGive = 4;
+  repeated InviterReachcfg weekInviteReachedGive = 5;
+  repeated InviterReachcfg monthInviteReachedGive = 6;
+}
+message InviterReachcfg {
+  string key = 1;
+  string value = 2;
+}
+message AssetBalanceListResponse{
+  repeated AssetBalance list = 1;
+}
+
+message AssetBalance{
+  int64 id = 1;
+  string    name = 2;
+  string logo_image = 3;
+  string  balance = 4;
+  float price = 5;
+}
+
+
+message GetVerifyFaceResRequest {
+    string  certify_id=1;
+}
+message InitVerifyFaceRequest {
+  string certName = 1;
+  string certNo = 2;
+  string returnUrl = 3;
+  string metaInfo = 4;
+}
+message UpdatePwdRequest {
+  string old_password = 2;
+  string new_password = 3;
+}
+message UpdatePwdResponse {
+}

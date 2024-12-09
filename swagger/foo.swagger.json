@@ -1,0 +1,1461 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "mproto/pub.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "PubService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/mproto.PubService/BankList": {
+      "post": {
+        "summary": "银行卡列表 对应旧项目的 /api/financial_card/bankList",
+        "operationId": "PubService_BankList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoBankListResonse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/CarouselList": {
+      "post": {
+        "summary": "首页轮播 对应旧项目的 /api/index/carouselList",
+        "operationId": "PubService_CarouselList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoCarouselListResonse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/CoinManagementList": {
+      "post": {
+        "summary": "usdt理财 对应旧项目的 /coin_management/index",
+        "operationId": "PubService_CoinManagementList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoCoinManagementListResonses"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/GetBankByPre": {
+      "post": {
+        "summary": "按卡号获取卡信息。 对应旧项目的  /api/financial_card/getBank?card=xxxxxx",
+        "operationId": "PubService_GetBankByPre",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelFinancialBank"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoGetBankByPreRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/Greet": {
+      "post": {
+        "operationId": "PubService_Greet",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/mprotoGreetResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of mprotoGreetResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoStringParam"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/HelpDetail": {
+      "post": {
+        "summary": "源api /api/index/helpDetail?name=xxx",
+        "operationId": "PubService_HelpDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelConfig"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoStringParam"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/HelpList": {
+      "post": {
+        "summary": "源api /api/index/helpCenter",
+        "operationId": "PubService_HelpList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoHelpListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/Index": {
+      "post": {
+        "summary": "首页，对应旧项目的 /api/index/home",
+        "operationId": "PubService_Index",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoIndexResonse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/IndexAllCoin": {
+      "post": {
+        "summary": "首页3个币排行及推荐，币数据中的logImage路径，使用这样的模板 https://image.tecajx.vipimages/{xxx}.png ; 如BTC使用https://image.tecajx.vip/images/BTC.png",
+        "operationId": "PubService_IndexAllCoin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoIndexAllCoinResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoPidParam"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/KlineInfoLast": {
+      "post": {
+        "summary": "kline离当前时间最近的1条信息:服务端缓存1秒; 同时附带了depth,ticker数据。 对应旧项目的  /api/coin_data/kline",
+        "operationId": "PubService_KlineInfoLast",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoKlineInfoLastResonse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoKlineInfoRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/KlineInfoList": {
+      "post": {
+        "summary": "kline初始列表:服务端缓存5秒 对应旧项目的  /api/coin_data/kline",
+        "operationId": "PubService_KlineInfoList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoKlineDataResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoKlineInfoRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/KlineTradeList": {
+      "post": {
+        "summary": "kline trade信息:服务端缓存1秒。 对应旧项目的  /api/coin_data/trade",
+        "operationId": "PubService_KlineTradeList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoKlineTradeListResonse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoStringParam"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/MinerList": {
+      "post": {
+        "summary": "矿机列表",
+        "operationId": "PubService_MinerList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMinerListResonses"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/RankList": {
+      "post": {
+        "summary": "行情列表  对应旧项目的  api/coin_data/ticker",
+        "operationId": "PubService_RankList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoRankListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoRankListRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/SendSms": {
+      "post": {
+        "operationId": "PubService_SendSms",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoSendSmsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "RankListRequestRankType": {
+      "type": "integer",
+      "format": "int32",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "default": 0,
+      "title": "- 0: 涨幅榜\n - 1: 跌幅榜\n - 2: 24小时交易量降序\n - 3: 保证金升序\n - 4: 保证金降序"
+    },
+    "modelCoin": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "logoImage": {
+          "type": "string"
+        },
+        "klineType": {
+          "type": "string"
+        },
+        "margin": {
+          "type": "number",
+          "format": "double"
+        },
+        "initialPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "curPrice": {
+          "type": "string",
+          "format": "int64"
+        },
+        "transferRate": {
+          "type": "number",
+          "format": "double"
+        },
+        "transferMinNum": {
+          "type": "number",
+          "format": "double"
+        },
+        "allowTransfer": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "allowRecharge": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "homeRecommend": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "status": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "eventTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "priceChangePercent": {
+          "type": "number",
+          "format": "float"
+        },
+        "totalTrade": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "modelCoinManagement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string",
+          "title": "产品名称"
+        },
+        "settlementCoinId": {
+          "type": "string",
+          "format": "int64",
+          "title": "结算币种"
+        },
+        "incomeCoinId": {
+          "type": "string",
+          "format": "int64",
+          "title": "收益币种"
+        },
+        "beginTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "开始时间"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "结束时间"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "title": "购买价格"
+        },
+        "closedDays": {
+          "type": "string",
+          "format": "int64",
+          "title": "封闭天数"
+        },
+        "issuesNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "发行总量"
+        },
+        "soldNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "已申购量"
+        },
+        "minBuyNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "最低购买"
+        },
+        "maxBuyNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "最高购买"
+        },
+        "incomeType": {
+          "type": "string",
+          "title": "收益类型"
+        },
+        "incomeRatio": {
+          "type": "number",
+          "format": "double",
+          "title": "收益率"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64",
+          "title": "状态"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64",
+          "title": "权重"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        }
+      },
+      "title": "usdt理财"
+    },
+    "modelConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "tip": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string"
+        },
+        "extend": {
+          "type": "string"
+        },
+        "allowDel": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64"
+        },
+        "sign": {
+          "type": "string",
+          "title": "签名校验"
+        }
+      }
+    },
+    "modelFinancialBank": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "feeRatio": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "modelKlineData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "statType": {
+          "type": "string"
+        },
+        "symbol": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "open": {
+          "type": "number",
+          "format": "double"
+        },
+        "close": {
+          "type": "number",
+          "format": "double"
+        },
+        "high": {
+          "type": "number",
+          "format": "double"
+        },
+        "low": {
+          "type": "number",
+          "format": "double"
+        },
+        "volume": {
+          "type": "number",
+          "format": "double",
+          "title": "成交量"
+        },
+        "quoteVolume": {
+          "type": "number",
+          "format": "double",
+          "title": "成交额"
+        }
+      }
+    },
+    "modelMarketCarousel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "position": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "editor": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "canOpen": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "modelMarketNews": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "coverImage": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "releaseTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "modelMarketNotice": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "isTop": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "isDialog": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "releaseTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "modelMiners": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "image": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "settlementCoinId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "produceCoinId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "genIncome": {
+          "type": "string",
+          "format": "int64"
+        },
+        "miningPower": {
+          "type": "string",
+          "format": "int64"
+        },
+        "runDays": {
+          "type": "string",
+          "format": "int64"
+        },
+        "issuesNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "salesNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "buyLimit": {
+          "type": "string",
+          "format": "int64"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "modelTickerData": {
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "number",
+          "format": "double"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "title": "现价"
+        },
+        "high": {
+          "type": "number",
+          "format": "double",
+          "title": "最高价"
+        },
+        "low": {
+          "type": "number",
+          "format": "double",
+          "title": "最低价"
+        },
+        "volume": {
+          "type": "number",
+          "format": "double",
+          "title": "成交量"
+        },
+        "quoteVolume": {
+          "type": "number",
+          "format": "double",
+          "title": "24h 成交额"
+        },
+        "priceChangePercent": {
+          "type": "number",
+          "format": "double",
+          "title": "涨跌幅"
+        }
+      }
+    },
+    "mprotoBankListResonse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelFinancialBank"
+          }
+        }
+      }
+    },
+    "mprotoCarouselListResonse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelMarketCarousel"
+          }
+        }
+      }
+    },
+    "mprotoCoinManagementListResonses": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelCoinManagement"
+          }
+        }
+      }
+    },
+    "mprotoDepthData": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string"
+        },
+        "lastUpdateId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "bids": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoPriceLevel"
+          }
+        },
+        "asks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoPriceLevel"
+          }
+        }
+      }
+    },
+    "mprotoGetBankByPreRequest": {
+      "type": "object",
+      "properties": {
+        "Card": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoGreetResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoHelpListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelConfig"
+          }
+        }
+      }
+    },
+    "mprotoIndexAllCoinResponse": {
+      "type": "object",
+      "properties": {
+        "ranks": {
+          "$ref": "#/definitions/mprotoRanks"
+        },
+        "Coins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoRankItem"
+          }
+        }
+      }
+    },
+    "mprotoIndexResonse": {
+      "type": "object",
+      "properties": {
+        "coinList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelCoin"
+          }
+        },
+        "inviteRegisterRule": {
+          "type": "string"
+        },
+        "noticeList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelMarketNotice"
+          }
+        },
+        "newsList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelMarketNews"
+          }
+        },
+        "appVersion": {
+          "type": "string"
+        },
+        "androidDownloadUrl": {
+          "type": "string"
+        },
+        "iosDownloadUrl": {
+          "type": "string"
+        },
+        "wgtDownloadUrl": {
+          "type": "string"
+        },
+        "appVersionDesc": {
+          "type": "string"
+        },
+        "openFaceRecognition": {
+          "type": "string"
+        },
+        "customerServiceLink": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoKlineDataResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelKlineData"
+          }
+        }
+      }
+    },
+    "mprotoKlineInfoLastResonse": {
+      "type": "object",
+      "properties": {
+        "Kline": {
+          "$ref": "#/definitions/modelKlineData",
+          "title": "k线"
+        },
+        "Depth": {
+          "$ref": "#/definitions/mprotoDepthData",
+          "title": "深度"
+        },
+        "Ticker": {
+          "$ref": "#/definitions/modelTickerData",
+          "title": "24h交易信息"
+        }
+      }
+    },
+    "mprotoKlineInfoRequest": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string"
+        },
+        "klineType": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoKlineTradeListResonse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoTradeEvent"
+          }
+        }
+      }
+    },
+    "mprotoMinerListResonses": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelMiners"
+          }
+        }
+      }
+    },
+    "mprotoMsgResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoNullMsg": {
+      "type": "object"
+    },
+    "mprotoPidParam": {
+      "type": "object",
+      "properties": {
+        "Pid": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "mprotoPriceLevel": {
+      "type": "object",
+      "properties": {
+        "price": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoRankItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "klineType": {
+          "type": "string",
+          "title": "string  logo_image = 5;"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "priceChangePercent": {
+          "type": "number",
+          "format": "float"
+        },
+        "initialPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "margin": {
+          "type": "number",
+          "format": "float",
+          "title": "uint32 event_time = 8;"
+        },
+        "totalTrade": {
+          "type": "number",
+          "format": "double",
+          "title": "24小时交易量"
+        },
+        "eventTime": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "mprotoRankListRequest": {
+      "type": "object",
+      "properties": {
+        "Pid": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rankType": {
+          "$ref": "#/definitions/RankListRequestRankType"
+        }
+      }
+    },
+    "mprotoRankListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoRankItem"
+          }
+        },
+        "hotNames": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoRanks": {
+      "type": "object",
+      "properties": {
+        "bull": {
+          "type": "string"
+        },
+        "bear": {
+          "type": "string"
+        },
+        "trade": {
+          "type": "string"
+        },
+        "recommand": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoSendSmsRequest": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string"
+        },
+        "templateCode": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoStringParam": {
+      "type": "object",
+      "properties": {
+        "str": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoTradeEvent": {
+      "type": "object",
+      "properties": {
+        "Price": {
+          "type": "string",
+          "title": "int64 Time = 1;"
+        },
+        "Quantity": {
+          "type": "string"
+        },
+        "TradeTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "IsBuyerMaker": {
+          "type": "boolean"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

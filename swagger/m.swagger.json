@@ -1,0 +1,4752 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "A Bit of Everything",
+    "version": "1.0",
+    "contact": {
+      "name": "gRPC-Gateway project",
+      "url": "https://github.com/grpc-ecosystem/grpc-gateway",
+      "email": "none@example.com"
+    },
+    "license": {
+      "name": "BSD 3-Clause License",
+      "url": "https://github.com/grpc-ecosystem/grpc-gateway/blob/main/LICENSE"
+    },
+    "x-something-something": "yadda"
+  },
+  "tags": [
+    {
+      "name": "GreetService"
+    },
+    {
+      "name": "PubService"
+    },
+    {
+      "name": "UserAuthService"
+    },
+    {
+      "name": "WpAuthService"
+    },
+    {
+      "name": "UserManService"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/greet.v1.GreetService/Greet": {
+      "post": {
+        "operationId": "GreetService_Greet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/greetv1GreetResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GreetRequest"
+            }
+          }
+        ],
+        "tags": [
+          "GreetService"
+        ]
+      }
+    },
+    "/kline/index_all_coin": {
+      "get": {
+        "summary": "首页3个币排行及推荐，币数据中的logImage路径，使用这样的模板 https://image.tecajx.vipimages/{xxx}.png ; 如BTC使用https://image.tecajx.vip/images/BTC.png",
+        "operationId": "PubService_IndexAllCoin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoIndexAllCoinResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Pid",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/kline/kline_info_last": {
+      "get": {
+        "summary": "kline离当前时间最近的1条信息:服务端缓存1秒; 同时附带了depth,ticker数据。 对应旧项目的  /api/coin_data/kline",
+        "operationId": "PubService_KlineInfoLast",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoKlineInfoLastResonse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "interval",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "klineType",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/kline/kline_info_list": {
+      "get": {
+        "summary": "kline初始列表:服务端缓存5秒 对应旧项目的  /api/coin_data/kline",
+        "operationId": "PubService_KlineInfoList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoKlineDataResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "interval",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "klineType",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/kline/kline_trade_list": {
+      "get": {
+        "summary": "kline trade信息:服务端缓存1秒。 对应旧项目的  /api/coin_data/trade",
+        "operationId": "PubService_KlineTradeList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoKlineTradeListResonse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "str",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/kline/rank_list": {
+      "post": {
+        "summary": "行情列表  对应旧项目的  api/coin_data/ticker",
+        "operationId": "PubService_RankList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoRankListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoRankListRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/BankList": {
+      "post": {
+        "summary": "银行卡列表 对应旧项目的 /api/financial_card/bankList",
+        "operationId": "PubService_BankList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoBankListResonse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/CarouselList": {
+      "post": {
+        "summary": "首页轮播 对应旧项目的 /api/index/carouselList",
+        "operationId": "PubService_CarouselList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoCarouselListResonse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/CoinManagementList": {
+      "post": {
+        "summary": "usdt理财 对应旧项目的 /coin_management/index",
+        "operationId": "PubService_CoinManagementList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoCoinManagementListResonses"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/GetBankByPre": {
+      "post": {
+        "summary": "按卡号获取卡信息。 对应旧项目的  /api/financial_card/getBank?card=xxxxxx",
+        "operationId": "PubService_GetBankByPre",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelFinancialBank"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoGetBankByPreRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/Greet": {
+      "post": {
+        "operationId": "PubService_Greet",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/mprotoGreetResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of mprotoGreetResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoStringParam"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/HelpDetail": {
+      "post": {
+        "summary": "源api /api/index/helpDetail?name=xxx",
+        "operationId": "PubService_HelpDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelConfig"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoStringParam"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/HelpList": {
+      "post": {
+        "summary": "源api /api/index/helpCenter",
+        "operationId": "PubService_HelpList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoHelpListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/Index": {
+      "post": {
+        "summary": "首页，对应旧项目的 /api/index/home",
+        "operationId": "PubService_Index",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoIndexResonse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.PubService/MinerList": {
+      "post": {
+        "summary": "矿机列表",
+        "operationId": "PubService_MinerList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMinerListResonses"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "PubService"
+        ]
+      }
+    },
+    "/mproto.UserAuthService/ForgetPwd": {
+      "post": {
+        "summary": "短信验证取回登陆密码",
+        "operationId": "UserAuthService_ForgetPwd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoForgetPwdRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserAuthService"
+        ]
+      }
+    },
+    "/mproto.UserAuthService/SignIn": {
+      "post": {
+        "summary": "用户登陆",
+        "operationId": "UserAuthService_SignIn",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoSignInResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoSignInRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserAuthService"
+        ]
+      }
+    },
+    "/mproto.UserAuthService/SignUp": {
+      "post": {
+        "summary": "用户注册 user regist",
+        "operationId": "UserAuthService_SignUp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoSignUpResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoSignUpRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserAuthService"
+        ]
+      }
+    },
+    "/mproto.UserAuthService/UpdateFundPassword": {
+      "post": {
+        "summary": "短信验证修改资金密码",
+        "operationId": "UserAuthService_UpdateFundPassword",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoForgetPwdRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserAuthService"
+        ]
+      }
+    },
+    "/mproto.UserAuthService/VerifyCode": {
+      "post": {
+        "summary": "验证码 verify code",
+        "operationId": "UserAuthService_VerifyCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoVerifyCodeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoVerifyCodeRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserAuthService"
+        ]
+      }
+    },
+    "/mproto.UserManService/AddCard": {
+      "post": {
+        "summary": "添加addcard 对应旧项目的 /api/financial_card/add",
+        "operationId": "UserManService_AddCard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoAddCardRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/AddWithdrawAddress": {
+      "post": {
+        "summary": "源api/api/address/add",
+        "operationId": "UserManService_AddWithdrawAddress",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoAddWithdrawAddressRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/AssetBalanceList": {
+      "post": {
+        "summary": "/源api /api/user_assets/assetsInfo",
+        "operationId": "UserManService_AssetBalanceList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoAssetBalanceListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/AssetBalanceWithTip": {
+      "post": {
+        "summary": "参数 coin_id： usdt的id 为1 ，默认为1.",
+        "operationId": "UserManService_AssetBalanceWithTip",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoAssetBalanceWithTipResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoIdParam"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/BuyContract": {
+      "post": {
+        "summary": "购买合约  源api:api/contract_order/buy",
+        "operationId": "UserManService_BuyContract",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoBuyContractRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/BuyMan": {
+      "post": {
+        "summary": "购买理财 源api:/api/coin_management/buy",
+        "operationId": "UserManService_BuyMan",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoBuyManRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/CMTransferIn": {
+      "post": {
+        "summary": "理财钱包转入api  源api: /api/coin_management/transferIn",
+        "operationId": "UserManService_CMTransferIn",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoTransferRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/CMTransferOut": {
+      "post": {
+        "summary": "理财钱转出api  源api: /api/coin_management/transferOut",
+        "operationId": "UserManService_CMTransferOut",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoTransferRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/CMWalletInfo": {
+      "post": {
+        "summary": "理财钱包余额信息api 源api: /api/user/walletInfo",
+        "operationId": "UserManService_CMWalletInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoWalletBalance"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/CommissionChangeList": {
+      "post": {
+        "summary": "佣金池记录 源api: api/commission_pool/changeList",
+        "operationId": "UserManService_CommissionChangeList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoCommissionChangeListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/CommissionCollect": {
+      "post": {
+        "summary": "api/commission_pool/collect",
+        "operationId": "UserManService_CommissionCollect",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/CommissionPoolIndex": {
+      "post": {
+        "summary": "佣金池首页 源api: api/commission_pool/index",
+        "operationId": "UserManService_CommissionPoolIndex",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoCommissionPoolIndexResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/GetVerifyFaceRes": {
+      "post": {
+        "summary": "实名人脸认证结果： 对应源api realNameAuthentication后的results。 响应内容为aliyun的原始结果,需要在测试中确定失败和成功的返回内容。",
+        "operationId": "UserManService_GetVerifyFaceRes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiHttpBody"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoGetVerifyFaceResRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/InitVerifyFace": {
+      "post": {
+        "summary": "实名人脸认证初始化： 对应源api realNameAuthentication：响应内容为aliyun的原始结果，需要在测试中确定失败和成功的返回内容。",
+        "operationId": "UserManService_InitVerifyFace",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiHttpBody"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoInitVerifyFaceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/LeaseMiner": {
+      "post": {
+        "summary": "租赁矿机",
+        "operationId": "UserManService_LeaseMiner",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoLeaseMinerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/LecturerList": {
+      "post": {
+        "summary": "导师社区列表 源api:api/lecturer/index",
+        "operationId": "UserManService_LecturerList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoLecturerListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/LevelInfo": {
+      "post": {
+        "summary": "源api /api/index/levelInfo",
+        "operationId": "UserManService_LevelInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoLevelInfoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/ListCard": {
+      "post": {
+        "summary": "银行卡列表  源api /api/financial_card/list",
+        "operationId": "UserManService_ListCard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoListCardtResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/ListWithdraw": {
+      "post": {
+        "summary": "提现列表: str参数提交 “0” 或 “1”： /api/withdraw/list\n对于 加密记录目前只有USDT,前端写死使USDT即可",
+        "operationId": "UserManService_ListWithdraw",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotolistWithdrawResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoStringParam"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/ListWithdrawAddress": {
+      "post": {
+        "summary": "提现地址列表 源api/api/address/index  ba_financial_address",
+        "operationId": "UserManService_ListWithdrawAddress",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoListWithdrawAddressResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/ManChangeList": {
+      "post": {
+        "summary": "余额宝记录   源api: /api/coin_change/managementIncomeList",
+        "operationId": "UserManService_ManChangeList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoManChangeListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/ManagementOrderList": {
+      "post": {
+        "summary": "理财定单列表",
+        "operationId": "UserManService_ManagementOrderList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoManagementOrderListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/MinerOrderList": {
+      "post": {
+        "summary": "矿机定单列表 源ip /api/miners_order/list",
+        "operationId": "UserManService_MinerOrderList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMinerOrderListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoMinerOrderListRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/QuickPayMethodList": {
+      "post": {
+        "summary": "源api api/financial_recharge/methodList",
+        "operationId": "UserManService_QuickPayMethodList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoQuickPayMethodListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/RechargeList": {
+      "post": {
+        "summary": "源api api/financial_recharge/rechargeList",
+        "operationId": "UserManService_RechargeList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoRechargeListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/SaveIdCardInfo": {
+      "post": {
+        "summary": "保存实名认证身份证信息",
+        "operationId": "UserManService_SaveIdCardInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoIdCardInfo"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/SubmitRecharge": {
+      "post": {
+        "summary": "快捷充值提交 源api  api/financial_recharge/submitRecharge",
+        "operationId": "UserManService_SubmitRecharge",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoSubmitRechargeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoSubmitRechargeRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/TradeContractOrderList": {
+      "post": {
+        "summary": "合约定单列表  源api: api/contract_order/list ;仅一个参数id，做为status使用",
+        "operationId": "UserManService_TradeContractOrderList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoTradeContractOrderListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoIdParam"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/UpdatePwd": {
+      "post": {
+        "summary": "修改密码",
+        "operationId": "UserManService_UpdatePwd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoUpdatePwdResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoUpdatePwdRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/UserInfoLevel": {
+      "post": {
+        "summary": "用户等及信息，对应旧项目的 /api/user/userInfo",
+        "operationId": "UserManService_UserInfoLevel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoUserInfoLevelResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/WithdrawApply": {
+      "post": {
+        "summary": "提现申请 源api /api/withdraw/apply",
+        "operationId": "UserManService_WithdrawApply",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoMsgResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoWithdrawApplyRquest"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.UserManService/WithdrawInfo": {
+      "post": {
+        "summary": "提现相关配制信息接口：  汇率 tip...  源api /api/withdraw/info",
+        "operationId": "UserManService_WithdrawInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoWithdrawInfoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoNullMsg"
+            }
+          }
+        ],
+        "tags": [
+          "UserManService"
+        ]
+      }
+    },
+    "/mproto.WpAuthService/WPChallenge": {
+      "post": {
+        "summary": "okx tron钱包插件登陆：app获取登陆授权码，后续app把授权码签名后，会把签名提交回来。",
+        "operationId": "WpAuthService_WPChallenge",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoChallengeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoChallengeRequest"
+            }
+          }
+        ],
+        "tags": [
+          "WpAuthService"
+        ]
+      }
+    },
+    "/mproto.WpAuthService/WPluginLogin": {
+      "post": {
+        "summary": "okx tron钱包插件登陆(WP,wallet plugin): app把授权码签名后，通过这个接口签名提交回来,获得token。",
+        "operationId": "WpAuthService_WPluginLogin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/mprotoWPluginLoginResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/mprotoWPluginLoginRequest"
+            }
+          }
+        ],
+        "tags": [
+          "WpAuthService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "RankListRequestRankType": {
+      "type": "integer",
+      "format": "int32",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "default": 0,
+      "title": "- 0: 涨幅榜\n - 1: 跌幅榜\n - 2: 24小时交易量降序\n - 3: 保证金升序\n - 4: 保证金降序"
+    },
+    "apiHttpBody": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "description": "The HTTP Content-Type header value specifying the content type of the body."
+        },
+        "data": {
+          "type": "string",
+          "format": "byte",
+          "description": "The HTTP request/response body as raw binary."
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          },
+          "description": "Application specific response metadata. Must be set in the first response\nfor streaming APIs."
+        }
+      },
+      "description": "Message that represents an arbitrary HTTP body. It should only be used for\npayload formats that can't be represented as JSON, such as raw binary or\nan HTML page.\n\n\nThis message can be used both in streaming and non-streaming API methods in\nthe request as well as the response.\n\nIt can be used as a top-level request field, which is convenient if one\nwants to extract parameters from either the URL or HTTP template into the\nrequest fields and also want access to the raw HTTP body.\n\nExample:\n\n    message GetResourceRequest {\n      // A unique request id.\n      string request_id = 1;\n\n      // The raw HTTP body is bound to this field.\n      google.api.HttpBody http_body = 2;\n\n    }\n\n    service ResourceService {\n      rpc GetResource(GetResourceRequest)\n        returns (google.api.HttpBody);\n      rpc UpdateResource(google.api.HttpBody)\n        returns (google.protobuf.Empty);\n\n    }\n\nExample with streaming methods:\n\n    service CaldavService {\n      rpc GetCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n      rpc UpdateCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n\n    }\n\nUse of this type only changes how the request and response bodies are\nhandled, all other features will continue to work unchanged."
+    },
+    "greetv1GreetResponse": {
+      "type": "object",
+      "properties": {
+        "greeting": {
+          "type": "string"
+        }
+      }
+    },
+    "modelCoin": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "logoImage": {
+          "type": "string"
+        },
+        "klineType": {
+          "type": "string"
+        },
+        "margin": {
+          "type": "number",
+          "format": "double"
+        },
+        "initialPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "curPrice": {
+          "type": "string",
+          "format": "int64"
+        },
+        "transferRate": {
+          "type": "number",
+          "format": "double"
+        },
+        "transferMinNum": {
+          "type": "number",
+          "format": "double"
+        },
+        "allowTransfer": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "allowRecharge": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "homeRecommend": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "status": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "eventTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "priceChangePercent": {
+          "type": "number",
+          "format": "float"
+        },
+        "totalTrade": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "modelCoinManagement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string",
+          "title": "产品名称"
+        },
+        "settlementCoinId": {
+          "type": "string",
+          "format": "int64",
+          "title": "结算币种"
+        },
+        "incomeCoinId": {
+          "type": "string",
+          "format": "int64",
+          "title": "收益币种"
+        },
+        "beginTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "开始时间"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "结束时间"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "title": "购买价格"
+        },
+        "closedDays": {
+          "type": "string",
+          "format": "int64",
+          "title": "封闭天数"
+        },
+        "issuesNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "发行总量"
+        },
+        "soldNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "已申购量"
+        },
+        "minBuyNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "最低购买"
+        },
+        "maxBuyNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "最高购买"
+        },
+        "incomeType": {
+          "type": "string",
+          "title": "收益类型"
+        },
+        "incomeRatio": {
+          "type": "number",
+          "format": "double",
+          "title": "收益率"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64",
+          "title": "状态"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64",
+          "title": "权重"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        }
+      },
+      "title": "usdt理财"
+    },
+    "modelConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "tip": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string"
+        },
+        "extend": {
+          "type": "string"
+        },
+        "allowDel": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64"
+        },
+        "sign": {
+          "type": "string",
+          "title": "签名校验"
+        }
+      }
+    },
+    "modelFinancialAddress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "network": {
+          "type": "string",
+          "title": "Network type: 0 or 1"
+        },
+        "address": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "isDefault": {
+          "type": "string",
+          "title": "Default address: 0 or 1"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        }
+      }
+    },
+    "modelFinancialBank": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "feeRatio": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "modelFinancialCard": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "financialBankId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "accountName": {
+          "type": "string"
+        },
+        "bankNum": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "statusText": {
+          "type": "string",
+          "title": "@gotags: gorm:\"-\""
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        }
+      }
+    },
+    "modelFinancialPaymentMethod": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Primary key"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name of the payment method"
+        },
+        "shortName": {
+          "type": "string",
+          "title": "Short name of the payment method"
+        },
+        "type": {
+          "type": "string",
+          "title": "Type of the payment method"
+        },
+        "bankAccount": {
+          "type": "string",
+          "title": "Bank account associated with the payment method"
+        },
+        "qrcodeImage": {
+          "type": "string",
+          "title": "QR code image URL"
+        },
+        "merchantNum": {
+          "type": "string",
+          "title": "Merchant number"
+        },
+        "encryptionKey": {
+          "type": "string",
+          "title": "Encryption key"
+        },
+        "otherEncryptionKey": {
+          "type": "string",
+          "title": "Other encryption key"
+        },
+        "paymentChannels": {
+          "type": "string",
+          "title": "Payment channels"
+        },
+        "url": {
+          "type": "string",
+          "title": "URL associated with the payment method"
+        },
+        "minAmount": {
+          "type": "number",
+          "format": "float",
+          "title": "Minimum amount"
+        },
+        "maxAmount": {
+          "type": "number",
+          "format": "float",
+          "title": "Maximum amount"
+        },
+        "feeRatio": {
+          "type": "number",
+          "format": "float",
+          "title": "Fee ratio"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64",
+          "title": "Status of the payment method"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64",
+          "title": "Weigh"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "Creation time"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "Update time"
+        }
+      }
+    },
+    "modelFinancialRecharge": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Primary key"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "default '0' not null"
+        },
+        "orderNo": {
+          "type": "string",
+          "title": "default '' not null"
+        },
+        "name": {
+          "type": "string",
+          "title": "null"
+        },
+        "financialPaymentMethodId": {
+          "type": "string",
+          "format": "int64",
+          "title": "default '0' not null"
+        },
+        "amount": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(16, 2) default 0.00 not null"
+        },
+        "feeRatio": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(16, 2) default 0.00 not null"
+        },
+        "fee": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(16, 2) default 0.00 not null"
+        },
+        "actualMoney": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(16, 2) default 0.00 not null"
+        },
+        "mainCoinNum": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(16, 2) default 0.00 not null"
+        },
+        "mainCoinFee": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(16, 2) default 0.00 null"
+        },
+        "coinPrice": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(16, 2) default 0.00 not null"
+        },
+        "callbackData": {
+          "type": "string",
+          "title": "default '' null"
+        },
+        "status": {
+          "type": "string",
+          "title": "enum ('0', '1', '2', '3') default '0' not null // 0等待支付1已完成2已取消3虚拟到账"
+        },
+        "statusText": {
+          "type": "string",
+          "title": "@gotags: gorm:\"-\""
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "description": "null",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "description": "null",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        }
+      }
+    },
+    "modelFinancialWithdraw": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Primary key"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64",
+          "title": "default '0' not null"
+        },
+        "refereeid": {
+          "type": "string",
+          "format": "int64",
+          "title": "null"
+        },
+        "teamLeaderId": {
+          "type": "string",
+          "format": "int64",
+          "title": "null"
+        },
+        "type": {
+          "type": "string",
+          "title": "enum ('0', '1') not null"
+        },
+        "coinId": {
+          "type": "string",
+          "format": "int64",
+          "title": "default '0' null"
+        },
+        "financialCardId": {
+          "type": "string",
+          "format": "int64",
+          "title": "default '0' null"
+        },
+        "orderNo": {
+          "type": "string",
+          "title": "default '' not null"
+        },
+        "money": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(10, 2) default 0.00 null"
+        },
+        "coinNum": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(10, 2) default 0.00 null"
+        },
+        "price": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(10, 2) default 0.00 null"
+        },
+        "walletType": {
+          "type": "string",
+          "title": "default '' null"
+        },
+        "walletAddress": {
+          "type": "string",
+          "title": "default '' null"
+        },
+        "addressId": {
+          "type": "string",
+          "format": "int64",
+          "title": "null"
+        },
+        "feeRatio": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(10, 2) default 0.00 null"
+        },
+        "feeMoney": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(10, 2) default 0.00 null"
+        },
+        "feeCoin": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(10, 2) default 0.00 null"
+        },
+        "actualMoney": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(10, 2) default 0.00 null"
+        },
+        "actualCoin": {
+          "type": "number",
+          "format": "float",
+          "title": "decimal(10, 2) default 0.00 null"
+        },
+        "status": {
+          "type": "string",
+          "title": "enum ('0', '1', '2', '3', '4') default '0' not null"
+        },
+        "statusText": {
+          "type": "string",
+          "title": "@gotags: gorm:\"-\""
+        },
+        "remark": {
+          "type": "string",
+          "title": "null"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        },
+        "FinancialCard": {
+          "$ref": "#/definitions/modelFinancialCard"
+        }
+      }
+    },
+    "modelKlineData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "statType": {
+          "type": "string"
+        },
+        "symbol": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "open": {
+          "type": "number",
+          "format": "double"
+        },
+        "close": {
+          "type": "number",
+          "format": "double"
+        },
+        "high": {
+          "type": "number",
+          "format": "double"
+        },
+        "low": {
+          "type": "number",
+          "format": "double"
+        },
+        "volume": {
+          "type": "number",
+          "format": "double",
+          "title": "成交量"
+        },
+        "quoteVolume": {
+          "type": "number",
+          "format": "double",
+          "title": "成交额"
+        }
+      }
+    },
+    "modelLecturer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Primary key"
+        },
+        "avatarImage": {
+          "type": "string",
+          "title": "Avatar image"
+        },
+        "communityName": {
+          "type": "string",
+          "title": "Community name"
+        },
+        "communityUserNum": {
+          "type": "string",
+          "format": "int64",
+          "title": "Community user number"
+        },
+        "lecturerName": {
+          "type": "string",
+          "title": "Lecturer name"
+        },
+        "margin": {
+          "type": "string",
+          "title": "Margin"
+        },
+        "winningPercentage": {
+          "type": "string",
+          "title": "Winning percentage"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64",
+          "title": "Weigh"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64",
+          "title": "Status"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        }
+      }
+    },
+    "modelManChange": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double"
+        },
+        "before": {
+          "type": "number",
+          "format": "double"
+        },
+        "after": {
+          "type": "number",
+          "format": "double"
+        },
+        "type": {
+          "type": "string"
+        },
+        "typeName": {
+          "type": "string",
+          "title": "@gotags: gorm:\"-\""
+        },
+        "fromUserId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "referrerId": {
+          "type": "string",
+          "format": "int64",
+          "title": "引起余额变动的订单号"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        },
+        "remark": {
+          "type": "string"
+        }
+      }
+    },
+    "modelManagementOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orderNo": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refereeid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "teamLeaderId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "coinManagementId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "coinManagement": {
+          "$ref": "#/definitions/modelCoinManagement"
+        },
+        "settlementCoinId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "settlementCoin": {
+          "$ref": "#/definitions/modelCoin"
+        },
+        "incomeCoinId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "incomeCoin": {
+          "$ref": "#/definitions/modelCoin"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "buyNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "totalPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "incomeType": {
+          "type": "string"
+        },
+        "incomeRatio": {
+          "type": "number",
+          "format": "double"
+        },
+        "totalIncome": {
+          "type": "number",
+          "format": "double"
+        },
+        "paidIncome": {
+          "type": "number",
+          "format": "double"
+        },
+        "rebateIncome": {
+          "type": "number",
+          "format": "double",
+          "title": "返利金额"
+        },
+        "closedDays": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "title": "1进行中2已完成3已终止"
+        },
+        "statusText": {
+          "type": "string",
+          "title": "@gotags: gorm:\"-\""
+        },
+        "expireTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        }
+      }
+    },
+    "modelMarketCarousel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "position": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "editor": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "canOpen": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "modelMarketNews": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "coverImage": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "releaseTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "modelMarketNotice": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "isTop": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "isDialog": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "releaseTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "modelMiners": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "image": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "settlementCoinId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "produceCoinId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "genIncome": {
+          "type": "string",
+          "format": "int64"
+        },
+        "miningPower": {
+          "type": "string",
+          "format": "int64"
+        },
+        "runDays": {
+          "type": "string",
+          "format": "int64"
+        },
+        "issuesNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "salesNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "buyLimit": {
+          "type": "string",
+          "format": "int64"
+        },
+        "weigh": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "modelMinersOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "minersId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refereeid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "teamLeaderId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "settlementCoinId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "produceCoinId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orderNo": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "num": {
+          "type": "string",
+          "format": "int64"
+        },
+        "totalPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "exchangeCode": {
+          "type": "string"
+        },
+        "discountRatio": {
+          "type": "number",
+          "format": "double"
+        },
+        "discountAmount": {
+          "type": "number",
+          "format": "double"
+        },
+        "realPay": {
+          "type": "number",
+          "format": "double"
+        },
+        "estimatedIncome": {
+          "type": "number",
+          "format": "double"
+        },
+        "gainedIncome": {
+          "type": "number",
+          "format": "double"
+        },
+        "pendingIncome": {
+          "type": "number",
+          "format": "double"
+        },
+        "bonus": {
+          "type": "number",
+          "format": "double"
+        },
+        "runMinutes": {
+          "type": "string",
+          "format": "int64"
+        },
+        "runDays": {
+          "type": "string",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "title": "enum ('1', '2', '3')"
+        },
+        "expireTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        },
+        "miners": {
+          "$ref": "#/definitions/modelMiners"
+        }
+      }
+    },
+    "modelTickerData": {
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "number",
+          "format": "double"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "title": "现价"
+        },
+        "high": {
+          "type": "number",
+          "format": "double",
+          "title": "最高价"
+        },
+        "low": {
+          "type": "number",
+          "format": "double",
+          "title": "最低价"
+        },
+        "volume": {
+          "type": "number",
+          "format": "double",
+          "title": "成交量"
+        },
+        "quoteVolume": {
+          "type": "number",
+          "format": "double",
+          "title": "24h 成交额"
+        },
+        "priceChangePercent": {
+          "type": "number",
+          "format": "double",
+          "title": "涨跌幅"
+        }
+      }
+    },
+    "modelTradeContractOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Primary key"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refereeid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "teamLeaderId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "contractId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "coinId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "orderNo": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "num": {
+          "type": "number",
+          "format": "float"
+        },
+        "buyPrice": {
+          "type": "number",
+          "format": "float"
+        },
+        "investedCoinNum": {
+          "type": "number",
+          "format": "double"
+        },
+        "fee": {
+          "type": "number",
+          "format": "double"
+        },
+        "feeRatio": {
+          "type": "number",
+          "format": "float"
+        },
+        "sellPrice": {
+          "type": "number",
+          "format": "float"
+        },
+        "income": {
+          "type": "number",
+          "format": "float"
+        },
+        "incomeRatio": {
+          "type": "number",
+          "format": "float"
+        },
+        "status": {
+          "type": "string",
+          "format": "int64"
+        },
+        "statusText": {
+          "type": "string",
+          "title": "@gotags: gorm:\"-\""
+        },
+        "paymentStatus": {
+          "type": "string",
+          "format": "int64"
+        },
+        "buyTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "sellTime": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "modelUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "groupId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "walletAddr": {
+          "type": "string",
+          "title": "钱包地址"
+        },
+        "pingtai": {
+          "type": "string",
+          "title": "平台"
+        },
+        "username": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "mobile": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string",
+          "format": "int64"
+        },
+        "birthday": {
+          "type": "string"
+        },
+        "money": {
+          "type": "number",
+          "format": "double"
+        },
+        "score": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lastLoginTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lastLoginIp": {
+          "type": "string"
+        },
+        "loginFailure": {
+          "type": "string",
+          "format": "int64"
+        },
+        "joinIp": {
+          "type": "string"
+        },
+        "joinTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "motto": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "salt": {
+          "type": "string"
+        },
+        "fundPassword": {
+          "type": "string"
+        },
+        "fundSalt": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "refereeid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "invitationcode": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "idcard": {
+          "type": "string"
+        },
+        "certifyId": {
+          "type": "string",
+          "title": "实人认证唯一标识"
+        },
+        "isCertified": {
+          "type": "string",
+          "format": "int64",
+          "title": "是否实名：1 未实名 2 已实名 3 认证失败"
+        },
+        "isCanWithdraw": {
+          "type": "string",
+          "format": "int64"
+        },
+        "isTeamLeader": {
+          "type": "string",
+          "format": "int64"
+        },
+        "isWhitelist": {
+          "type": "string",
+          "format": "int64"
+        },
+        "isActivation": {
+          "type": "string",
+          "format": "int64"
+        },
+        "activationTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "activeTimes": {
+          "type": "string",
+          "format": "int64"
+        },
+        "limitWithdrawTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "teamFlag": {
+          "type": "string"
+        },
+        "teamLeaderId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "teamLevel": {
+          "type": "string",
+          "format": "int64"
+        },
+        "commissionPool": {
+          "type": "number",
+          "format": "double"
+        },
+        "level": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refereeNums": {
+          "type": "string",
+          "format": "int64"
+        },
+        "teamNums": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lotteryCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "creditScore": {
+          "type": "string",
+          "format": "int64",
+          "title": "信誉分"
+        },
+        "withdrawAddresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelFinancialAddress"
+          }
+        },
+        "Withdraws": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelFinancialWithdraw"
+          }
+        }
+      }
+    },
+    "modelUserAssets": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "coinId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "coinName": {
+          "type": "string",
+          "title": "@gotags: gorm:\"-\""
+        },
+        "balance": {
+          "type": "number",
+          "format": "double"
+        },
+        "freeze": {
+          "type": "number",
+          "format": "double"
+        },
+        "address": {
+          "type": "string"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        }
+      }
+    },
+    "modelUserCommissionChange": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double"
+        },
+        "before": {
+          "type": "number",
+          "format": "double"
+        },
+        "after": {
+          "type": "number",
+          "format": "double"
+        },
+        "type": {
+          "type": "string"
+        },
+        "typeName": {
+          "type": "string"
+        },
+        "fromUserId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "referrerId": {
+          "type": "string",
+          "format": "int64",
+          "title": "引起余额变动的订单号"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoCreateTime\""
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "@gotags: gorm:\"autoUpdateTime\""
+        }
+      }
+    },
+    "modelUserLevel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "logoImage": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "level": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "rebateLayers": {
+          "type": "string",
+          "format": "int64"
+        },
+        "refereeNum": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "teamNum": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "memberLevel": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "memberLevelNum": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "bonus": {
+          "type": "number",
+          "format": "float"
+        },
+        "layer1Ratio": {
+          "type": "number",
+          "format": "float"
+        },
+        "layer2Ratio": {
+          "type": "number",
+          "format": "float"
+        },
+        "layer3Ratio": {
+          "type": "number",
+          "format": "float"
+        },
+        "layer4Ratio": {
+          "type": "number",
+          "format": "float"
+        },
+        "layer5Ratio": {
+          "type": "number",
+          "format": "float"
+        },
+        "isOpen": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "mprotoAddCardRequest": {
+      "type": "object",
+      "properties": {
+        "bankId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "accountName": {
+          "type": "string"
+        },
+        "bankNum": {
+          "type": "string"
+        },
+        "fundPassword": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoAddWithdrawAddressRequest": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoAssetBalance": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "logoImage": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "mprotoAssetBalanceListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoAssetBalance"
+          }
+        }
+      }
+    },
+    "mprotoAssetBalanceWithTipResponse": {
+      "type": "object",
+      "properties": {
+        "Asset": {
+          "$ref": "#/definitions/modelUserAssets"
+        },
+        "tip": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoBankListResonse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelFinancialBank"
+          }
+        }
+      }
+    },
+    "mprotoBuyContractRequest": {
+      "type": "object",
+      "properties": {
+        "ContractName": {
+          "type": "string",
+          "title": "币名 如 BTC"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "mprotoBuyManRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "num": {
+          "type": "string",
+          "format": "int64"
+        },
+        "fundPassword": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoCarouselListResonse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelMarketCarousel"
+          }
+        }
+      }
+    },
+    "mprotoChallengeRequest": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoChallengeResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoCoinManagementListResonses": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelCoinManagement"
+          }
+        }
+      }
+    },
+    "mprotoCommissionChangeListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelUserCommissionChange"
+          }
+        }
+      }
+    },
+    "mprotoCommissionPoolIndexResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/modelUser"
+        },
+        "level": {
+          "$ref": "#/definitions/modelUserLevel"
+        },
+        "commissionPoolTip": {
+          "type": "string"
+        },
+        "totalAmount": {
+          "type": "number",
+          "format": "double"
+        },
+        "teamNums": {
+          "type": "string",
+          "format": "int64"
+        },
+        "teamNumsGrade": {
+          "type": "string",
+          "format": "int64"
+        },
+        "collectNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "canCollect": {
+          "type": "boolean"
+        }
+      }
+    },
+    "mprotoDepthData": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string"
+        },
+        "lastUpdateId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "bids": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoPriceLevel"
+          }
+        },
+        "asks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoPriceLevel"
+          }
+        }
+      }
+    },
+    "mprotoForgetPwdRequest": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "vcode": {
+          "type": "string",
+          "title": "验证码 VerifyCode"
+        }
+      }
+    },
+    "mprotoGetBankByPreRequest": {
+      "type": "object",
+      "properties": {
+        "Card": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoGetVerifyFaceResRequest": {
+      "type": "object",
+      "properties": {
+        "certifyId": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoGreetResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoHelpListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelConfig"
+          }
+        }
+      }
+    },
+    "mprotoIdCardInfo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "idcard": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoIdParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "mprotoIndexAllCoinResponse": {
+      "type": "object",
+      "properties": {
+        "ranks": {
+          "$ref": "#/definitions/mprotoRanks"
+        },
+        "Coins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoRankItem"
+          }
+        }
+      }
+    },
+    "mprotoIndexResonse": {
+      "type": "object",
+      "properties": {
+        "coinList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelCoin"
+          }
+        },
+        "inviteRegisterRule": {
+          "type": "string"
+        },
+        "noticeList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelMarketNotice"
+          }
+        },
+        "newsList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelMarketNews"
+          }
+        },
+        "appVersion": {
+          "type": "string"
+        },
+        "androidDownloadUrl": {
+          "type": "string"
+        },
+        "iosDownloadUrl": {
+          "type": "string"
+        },
+        "wgtDownloadUrl": {
+          "type": "string"
+        },
+        "appVersionDesc": {
+          "type": "string"
+        },
+        "openFaceRecognition": {
+          "type": "string"
+        },
+        "customerServiceLink": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoInitVerifyFaceRequest": {
+      "type": "object",
+      "properties": {
+        "certName": {
+          "type": "string"
+        },
+        "certNo": {
+          "type": "string"
+        },
+        "returnUrl": {
+          "type": "string"
+        },
+        "metaInfo": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoInviterReachcfg": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoKlineDataResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelKlineData"
+          }
+        }
+      }
+    },
+    "mprotoKlineInfoLastResonse": {
+      "type": "object",
+      "properties": {
+        "Kline": {
+          "$ref": "#/definitions/modelKlineData",
+          "title": "k线"
+        },
+        "Depth": {
+          "$ref": "#/definitions/mprotoDepthData",
+          "title": "深度"
+        },
+        "Ticker": {
+          "$ref": "#/definitions/modelTickerData",
+          "title": "24h交易信息"
+        }
+      }
+    },
+    "mprotoKlineTradeListResonse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoTradeEvent"
+          }
+        }
+      }
+    },
+    "mprotoLeaseMinerRequest": {
+      "type": "object",
+      "properties": {
+        "num": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "minersId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "fundPassword": {
+          "type": "string"
+        },
+        "exchangeCode": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoLecturerListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelLecturer"
+          }
+        }
+      }
+    },
+    "mprotoLevel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "logoImage": {
+          "type": "string"
+        },
+        "bonus": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "refereeNum": {
+          "type": "integer",
+          "format": "int64",
+          "title": "for next level"
+        },
+        "teamNum": {
+          "type": "integer",
+          "format": "int64",
+          "title": "for next level"
+        }
+      }
+    },
+    "mprotoLevelInfoResponse": {
+      "type": "object",
+      "properties": {
+        "levelList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelUserLevel"
+          }
+        },
+        "todayInviteCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "weekInviteCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "monthInviteCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "todayInviteReachedGive": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoInviterReachcfg"
+          }
+        },
+        "weekInviteReachedGive": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoInviterReachcfg"
+          }
+        },
+        "monthInviteReachedGive": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoInviterReachcfg"
+          }
+        }
+      }
+    },
+    "mprotoListCardtResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelFinancialCard"
+          }
+        }
+      }
+    },
+    "mprotoListWithdrawAddressResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelFinancialAddress"
+          }
+        }
+      }
+    },
+    "mprotoManChangeListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelManChange"
+          }
+        }
+      }
+    },
+    "mprotoManagementOrderListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelManagementOrder"
+          }
+        }
+      }
+    },
+    "mprotoMinerListResonses": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelMiners"
+          }
+        }
+      }
+    },
+    "mprotoMinerOrderListRequest": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Pager pager = 1;",
+          "title": "1正常,2过期"
+        }
+      }
+    },
+    "mprotoMinerOrderListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelMinersOrder"
+          }
+        }
+      }
+    },
+    "mprotoMsgResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoNullMsg": {
+      "type": "object"
+    },
+    "mprotoPriceLevel": {
+      "type": "object",
+      "properties": {
+        "price": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoQuickPayMethodListResponse": {
+      "type": "object",
+      "properties": {
+        "mainCoinPrice": {
+          "type": "number",
+          "format": "float"
+        },
+        "rechargeMoneyTip": {
+          "type": "string"
+        },
+        "MethodList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelFinancialPaymentMethod"
+          }
+        }
+      }
+    },
+    "mprotoRankItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "klineType": {
+          "type": "string",
+          "title": "string  logo_image = 5;"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "priceChangePercent": {
+          "type": "number",
+          "format": "float"
+        },
+        "initialPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "margin": {
+          "type": "number",
+          "format": "float",
+          "title": "uint32 event_time = 8;"
+        },
+        "totalTrade": {
+          "type": "number",
+          "format": "double",
+          "title": "24小时交易量"
+        },
+        "eventTime": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "mprotoRankListRequest": {
+      "type": "object",
+      "properties": {
+        "Pid": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rankType": {
+          "$ref": "#/definitions/RankListRequestRankType"
+        }
+      }
+    },
+    "mprotoRankListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/mprotoRankItem"
+          }
+        },
+        "hotNames": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoRanks": {
+      "type": "object",
+      "properties": {
+        "bull": {
+          "type": "string"
+        },
+        "bear": {
+          "type": "string"
+        },
+        "trade": {
+          "type": "string"
+        },
+        "recommand": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoRechargeListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelFinancialRecharge"
+          }
+        }
+      }
+    },
+    "mprotoSignInRequest": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string",
+          "title": "用户名，或手机号"
+        },
+        "password": {
+          "type": "string"
+        },
+        "vcode": {
+          "type": "string",
+          "title": "VerifyCode 设计为：当用户连续多次输错密码时，需要输入验证码"
+        },
+        "verifyCodeId": {
+          "type": "string",
+          "title": "got from VerifyImageRPC"
+        },
+        "deviceId": {
+          "type": "string",
+          "title": "[option] 设计为：如果能获取到设备id，就传递，否则不传递"
+        },
+        "os": {
+          "type": "string",
+          "title": "[option] android or ios"
+        },
+        "osVersion": {
+          "type": "string",
+          "title": "[option]"
+        }
+      }
+    },
+    "mprotoSignInResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "isCertified": {
+          "type": "boolean",
+          "title": "是否实名认证 2已认证 1未认证"
+        }
+      }
+    },
+    "mprotoSignUpRequest": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string",
+          "title": "string user_name = 1;"
+        },
+        "password": {
+          "type": "string"
+        },
+        "confirmPassword": {
+          "type": "string"
+        },
+        "vcode": {
+          "type": "string",
+          "title": "VerifyCode"
+        },
+        "verifyCodeId": {
+          "type": "string",
+          "title": "got from VerifyCodeRPC"
+        },
+        "registCode": {
+          "type": "string",
+          "title": "用户注册时输入的邀请码"
+        },
+        "deviceId": {
+          "type": "string",
+          "title": "[option]  设备id 设计为：如果能获取到设备id，就传递，否则不传递"
+        },
+        "os": {
+          "type": "string",
+          "title": "[option] android or ios"
+        },
+        "osVersion": {
+          "type": "string",
+          "title": "[option]"
+        }
+      }
+    },
+    "mprotoSignUpResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoStringParam": {
+      "type": "object",
+      "properties": {
+        "str": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoSubmitRechargeRequest": {
+      "type": "object",
+      "properties": {
+        "methodId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "mprotoSubmitRechargeResponse": {
+      "type": "object",
+      "properties": {
+        "redirectUrl": {
+          "type": "string",
+          "title": "快捷支付返回跳转地址，"
+        },
+        "message": {
+          "type": "string",
+          "title": "银行卡支付返回提示信息"
+        }
+      }
+    },
+    "mprotoTradeContractOrderListResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelTradeContractOrder"
+          }
+        }
+      }
+    },
+    "mprotoTradeEvent": {
+      "type": "object",
+      "properties": {
+        "Price": {
+          "type": "string",
+          "title": "int64 Time = 1;"
+        },
+        "Quantity": {
+          "type": "string"
+        },
+        "TradeTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "IsBuyerMaker": {
+          "type": "boolean"
+        }
+      }
+    },
+    "mprotoTransferRequest": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number",
+          "format": "double"
+        },
+        "fundPassword": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoUpdatePwdRequest": {
+      "type": "object",
+      "properties": {
+        "oldPassword": {
+          "type": "string"
+        },
+        "newPassword": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoUpdatePwdResponse": {
+      "type": "object"
+    },
+    "mprotoUserInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "mobile": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "refereeNums": {
+          "type": "string",
+          "format": "int64",
+          "title": "string fund_password = 7;"
+        },
+        "teamNums": {
+          "type": "string",
+          "format": "int64"
+        },
+        "token": {
+          "type": "string"
+        },
+        "refreshToken": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "title": "userName"
+        },
+        "idCard": {
+          "type": "string"
+        },
+        "isCertified": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "mprotoUserInfoLevelResponse": {
+      "type": "object",
+      "properties": {
+        "userInfo": {
+          "$ref": "#/definitions/mprotoUserInfo"
+        },
+        "level": {
+          "$ref": "#/definitions/mprotoLevel"
+        },
+        "nextLevel": {
+          "$ref": "#/definitions/mprotoLevel"
+        },
+        "nextRefereeNums": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "refereeNumsDiff": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nextTeamNums": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "teamNumsDiff": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "teamLeaderMobile": {
+          "type": "string"
+        },
+        "identifierHash": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoVerifyCodeRequest": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoVerifyCodeResponse": {
+      "type": "object",
+      "properties": {
+        "verifyCodeId": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoWPluginLoginRequest": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "sign": {
+          "type": "string",
+          "title": "16进制编码的 签名"
+        }
+      }
+    },
+    "mprotoWPluginLoginResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoWalletBalance": {
+      "type": "object",
+      "properties": {
+        "usdt": {
+          "type": "number",
+          "format": "double"
+        },
+        "money": {
+          "type": "number",
+          "format": "double"
+        },
+        "moneyHourIncomeRatio": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoWithdrawApplyRquest": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "format": "double"
+        },
+        "addressId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cardId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "fundPassword": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotoWithdrawInfoResponse": {
+      "type": "object",
+      "properties": {
+        "balance": {
+          "type": "number",
+          "format": "double"
+        },
+        "usdtPrice": {
+          "type": "number",
+          "format": "double"
+        },
+        "openWithdrawUsdt": {
+          "type": "boolean"
+        },
+        "openWithdrawMoney": {
+          "type": "boolean"
+        },
+        "withdrawMinNum": {
+          "type": "string"
+        },
+        "withdrawMaxNum": {
+          "type": "string"
+        },
+        "withdrawMinCoinNum": {
+          "type": "string"
+        },
+        "withdrawMaxCoinNum": {
+          "type": "string"
+        },
+        "withdrawRuleTip": {
+          "type": "string"
+        },
+        "feeRatio": {
+          "type": "string"
+        }
+      }
+    },
+    "mprotolistWithdrawResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/modelFinancialWithdraw"
+          }
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+        }
+      },
+      "additionalProperties": {},
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1GreetRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

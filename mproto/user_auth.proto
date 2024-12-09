@@ -1,0 +1,106 @@
+syntax = "proto3";
+import "mproto/model/model.proto";
+import "mproto/pub.proto";
+package mproto;
+option go_package = "muskex/gen/mproto;mproto";
+
+service UserAuthService{
+  //验证码 verify code
+  rpc VerifyCode(VerifyCodeRequest) returns (VerifyCodeResponse) {}
+  //用户注册 user regist
+  rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
+  //用户登陆
+  rpc SignIn(SignInRequest) returns (SignInResponse) {}
+
+  //短信验证取回登陆密码
+  rpc ForgetPwd(ForgetPwdRequest) returns (MsgResponse) {}
+  //短信验证修改资金密码
+  rpc UpdateFundPassword(ForgetPwdRequest) returns (MsgResponse) {}
+}
+
+message ForgetPwdRequest {
+  string mobile = 1;
+  string password = 2;
+  //验证码 VerifyCode
+  string vcode = 3;
+
+  //got from VerifyImageRPC
+//  string verify_code_id = 4;
+}
+
+message SignUpRequest {
+//  string user_name = 1;
+  string mobile = 4;
+  string password = 2;
+  string confirm_password = 3;
+  //VerifyCode
+  string vcode = 5;
+  //got from VerifyCodeRPC
+  string verify_code_id = 6;
+  //用户注册时输入的邀请码
+  string regist_code=10;
+
+  //[option]  设备id 设计为：如果能获取到设备id，就传递，否则不传递
+  string device_id=7;
+  //[option] android or ios
+  string os=8;
+  //[option]
+  string osVersion=9;
+}
+message SignUpResponse {
+  string token = 1;
+}
+
+message SignInRequest {
+  //用户名，或手机号
+  string user_name = 1;
+  string password = 2;
+  //VerifyCode 设计为：当用户连续多次输错密码时，需要输入验证码
+  string vcode = 3;
+  //got from VerifyImageRPC
+  string verify_code_id = 4;
+  //[option] 设计为：如果能获取到设备id，就传递，否则不传递
+  string device_id=7;
+  //[option] android or ios
+  string os=8;
+  //[option]
+  string osVersion=9;
+}
+message SignInResponse {
+  string token = 1;
+  //是否实名认证 2已认证 1未认证
+  bool is_certified = 2;
+}
+message VerifyCodeRequest {
+  string mobile = 1;
+}
+message VerifyCodeResponse {
+  string verify_code_id = 1;
+}
+
+
+
+//okx tron钱包插件登陆
+service WpAuthService{
+  //okx tron钱包插件登陆：app获取登陆授权码，后续app把授权码签名后，会把签名提交回来。
+  rpc WPChallenge(ChallengeRequest) returns (ChallengeResponse){
+
+  }
+  //okx tron钱包插件登陆(WP,wallet plugin): app把授权码签名后，通过这个接口签名提交回来,获得token。
+  rpc WPluginLogin(WPluginLoginRequest) returns(WPluginLoginResponse){}
+
+}
+message WPluginLoginRequest{
+  string  address =1;
+  //16进制编码的 签名
+  string  sign =2;
+}
+message WPluginLoginResponse{
+  string  token =1;
+}
+message ChallengeRequest{
+  string  address =1;
+}
+message ChallengeResponse{
+  string  code =1;
+}
